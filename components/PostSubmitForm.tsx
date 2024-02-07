@@ -1,4 +1,4 @@
-export default function ArticleSubmitForm() {
+export default function PostSubmitForm() {
   return(
     <div className="mt-4 bg-white rounded-lg shadow-md p-4">
       <form className="flex flex-col space-y-2">

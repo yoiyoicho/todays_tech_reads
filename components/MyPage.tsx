@@ -7,7 +7,7 @@ import Header from './Header';
 import ChevronLeftIcon from './ChevronLeftIcon';
 import ChevronRightIcon from './ChevronRightIcon';
 import Post from './Post';
-import ArticleSubmitForm from './ArticleSubmitForm';
+import PostSubmitForm from './PostSubmitForm';
 
 export default function MyPage() {
   return (
@@ -22,7 +22,7 @@ export default function MyPage() {
           </div>
           <Post />
         </div>
-        <ArticleSubmitForm />
+        <PostSubmitForm />
       </div>
     </div>
   )
