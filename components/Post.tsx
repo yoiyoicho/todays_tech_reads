@@ -1,4 +1,4 @@
-export default function ArticleCard() {
+export default function Post() {
   return(
     <div className="bg-white rounded-lg shadow-md p-4">
       <div className="flex items-start space-x-4">

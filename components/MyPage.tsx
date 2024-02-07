@@ -6,7 +6,7 @@
 import Header from './Header';
 import ChevronLeftIcon from './ChevronLeftIcon';
 import ChevronRightIcon from './ChevronRightIcon';
-import ArticleCard from './ArticleCard';
+import Post from './Post';
 import ArticleSubmitForm from './ArticleSubmitForm';
 
 export default function MyPage() {
@@ -20,7 +20,7 @@ export default function MyPage() {
             <span>2023/1/23 Tue.</span>
             <ChevronRightIcon className="h-4 w-4" />
           </div>
-          <ArticleCard />
+          <Post />
         </div>
         <ArticleSubmitForm />
       </div>
