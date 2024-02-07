@@ -11,36 +11,36 @@ datasource db {
 }
 
 model Article {
-  id            String     @default(cuid()) @id
-  url           String
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  Post          ArticlePost[]
+  id            String    @default(cuid()) @id
+  url           String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  Post          ArticlePostRelation[]
 }
 
 model Post {
-  id            String     @default(cuid()) @id
+  id            String    @default(cuid()) @id
   comment       String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   author        User      @relation(fields: [authorId], references: [id])
   authorId      String
-  Article       ArticlePost[]
+  Article       ArticlePostRelation[]
 }
 
-model ArticlePost {
-  article       Article     @relation(fields: [articleId], references: [id])
+model ArticlePostRelation {
+  article       Article   @relation(fields: [articleId], references: [id])
   articleId     String
-  post          Post        @relation(fields: [postId], references: [id])
+  post          Post      @relation(fields: [postId], references: [id])
   postId        String
   @@id([articleId, postId])
 }
 
 model User {
-  id            String       @default(cuid()) @id
+  id            String    @default(cuid()) @id
   name          String?
   email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   posts         Post[]
 }
