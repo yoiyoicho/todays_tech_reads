@@ -3,11 +3,11 @@
  * @see https://v0.dev/t/YPdBb8ZvvCY
  */
 
-import Header from './Header';
-import ChevronLeftIcon from './ChevronLeftIcon';
-import ChevronRightIcon from './ChevronRightIcon';
-import Post from './Post';
-import PostSubmitForm from './PostSubmitForm';
+import Header from '../components/Header';
+import ChevronLeftIcon from '../components/ChevronLeftIcon';
+import ChevronRightIcon from '../components/ChevronRightIcon';
+import Post from '../components/Post';
+import PostSubmitForm from '../components/PostSubmitForm';
 
 export default function MyPage() {
   return (
