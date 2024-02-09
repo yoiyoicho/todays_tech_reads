@@ -15,7 +15,7 @@ model Article {
   url           String    @unique
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  Post          ArticlePostRelation[]
+  posts         Post[]
 }
 
 model Post {
@@ -25,15 +25,8 @@ model Post {
   updatedAt     DateTime  @updatedAt
   author        User      @relation(fields: [authorId], references: [id])
   authorId      String
-  Article       ArticlePostRelation[]
-}
-
-model ArticlePostRelation {
   article       Article   @relation(fields: [articleId], references: [id])
   articleId     String
-  post          Post      @relation(fields: [postId], references: [id])
-  postId        String
-  @@id([articleId, postId])
 }
 
 model User {
