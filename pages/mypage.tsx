@@ -13,10 +13,10 @@ import prisma from '../lib/prisma';
 import { PostType } from '../types/Post'
 
 type PropsType = {
-  feed: PostType[];
+  feeds: PostType[];
 }
 
-export default function MyPage({ feed }: PropsType ) {
+export default function MyPage({ feeds }: PropsType ) {
   return (
     <div key="1" className="bg-[#5590c9] min-h-screen p-4">
       <div className="max-w-2xl mx-auto">
@@ -36,7 +36,7 @@ export default function MyPage({ feed }: PropsType ) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
+  const feeds = await prisma.post.findMany({
     select: {
       id: true,
       comment: true,
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   // TODO: Articleにtitle, description, image情報を追加する
   return {
-    props: { feed },
+    props: { feeds },
     revalidate: 10,
   };
 };
