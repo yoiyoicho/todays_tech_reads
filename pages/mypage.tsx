@@ -10,13 +10,13 @@ import ChevronRightIcon from '../components/ChevronRightIcon';
 import Post from '../components/Post';
 import PostSubmitForm from '../components/PostSubmitForm';
 import prisma from '../lib/prisma';
-import { PostType } from '../types/Post'
+import { PostType } from '../types/PostType';
 
 type PropsType = {
-  feeds: PostType[];
+  posts: PostType[];
 }
 
-export default function MyPage({ feeds }: PropsType ) {
+export default function MyPage({ posts }: PropsType ) {
   return (
     <div key="1" className="bg-[#5590c9] min-h-screen p-4">
       <div className="max-w-2xl mx-auto">
@@ -27,7 +27,9 @@ export default function MyPage({ feeds }: PropsType ) {
             <span>2023/1/23 Tue.</span>
             <ChevronRightIcon className="h-4 w-4" />
           </div>
-          <Post />
+          {posts.map((post, index) => (
+            <Post key={index} post={post} />
+          ))}
         </div>
         <PostSubmitForm />
       </div>
@@ -36,7 +38,7 @@ export default function MyPage({ feeds }: PropsType ) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feeds = await prisma.post.findMany({
+  const posts = await prisma.post.findMany({
     select: {
       id: true,
       comment: true,
@@ -51,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   // TODO: Articleにtitle, description, image情報を追加する
   return {
-    props: { feeds },
+    props: { posts },
     revalidate: 10,
   };
 };
