@@ -3,7 +3,6 @@
  * @see https://v0.dev/t/IxtYS3s8ikh
  */
 
-import Link from "next/link";
 import Header from '../components/Header';
 
 export default function Home() {
@@ -26,12 +25,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Link
+                <a
                   className="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                  href="#"
+                  href="/api/auth/login?returnTo=/mypage"
                 >
                   Get Started
-                </Link>
+                </a>
               </div>
             </div>
           </div>
