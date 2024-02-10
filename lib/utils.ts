@@ -14,7 +14,7 @@ export function parseDateHash(dateHash: string | undefined) {
   }
 
   const year = parseInt(dateHash.substring(0, 4), 10);
-  const month = parseInt(dateHash.substring(4, 6), 10) - 1; // 0から始まるため-1する
+  const month = parseInt(dateHash.substring(4, 6), 10) - 1; // monthは0から始まるため-1する
   const day = parseInt(dateHash.substring(6, 8), 10);
 
   const date = new Date(year, month, day);
@@ -39,13 +39,25 @@ export function areDatesEqual(date1: Date, date2: Date) {
   return year1 === year2 && month1 === month2 && day1 === day2;
 }
 
-export function formatDate(date: Date) {
+export function formatDateForHead(date: Date) {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 0から始まるため+1する
+  const month = date.getMonth() + 1; // monthは0から始まるため+1する
   const day = date.getDate();
   const dayOfWeek = days[date.getDay()];
 
   return `${year}/${month}/${day} ${dayOfWeek}.`;
+}
+
+export function formatDateForHash(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() は0から始まるため、1を加算
+  const day = date.getDate();
+
+  // 月と日が1桁の場合は先頭に0を付ける
+  const monthStr = month < 10 ? `0${month}` : month.toString();
+  const dayStr = day < 10 ? `0${day}` : day.toString();
+
+  return `${year}${monthStr}${dayStr}`;
 }

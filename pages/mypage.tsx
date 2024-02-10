@@ -16,7 +16,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { parseDateHash, areDatesEqual, formatDate } from '../lib/utils';
+import { parseDateHash, areDatesEqual, formatDateForHead, formatDateForHash } from '../lib/utils';
 
 type PropsType = {
   posts: PostType[];
@@ -29,25 +29,46 @@ export default function MyPage({ posts }: PropsType ) {
     today.setHours(0, 0, 0, 0);
     return today;
   });
-  const [selectedPosts, setSelectedPosts] = useState<PostType[]>([]);
+
+  const filterdPosts = (date: Date) => {
+    return posts.filter((post) => {
+      const postDate = new Date(post.createdAt);
+      return areDatesEqual(date, postDate);
+    })
+  };
+
+  const [selectedPosts, setSelectedPosts] = useState<PostType[]>(
+    filterdPosts(selectedDate)
+  );
+  const [isToday, setIsToday] = useState<boolean>(true);
+
+  const handleHashChange = () => {
+    const hash = window.location.hash.slice(1);
+    const hashDate = parseDateHash(hash);
+    const today = new Date();
+    const selectedPosts = filterdPosts(hashDate);
+
+    if (areDatesEqual(hashDate, today)) {
+      router.replace('/mypage', undefined, { shallow: true });
+      setIsToday(true);
+    } else {
+      setIsToday(false);
+    }
+    setSelectedDate(hashDate);
+    setSelectedPosts(selectedPosts);
+  };
+
+  const handleDate = (day: number) => {
+    const newDate = new Date();
+    newDate.setDate(selectedDate.getDate() + day);
+    const newHashDate = formatDateForHash(newDate);
+    router.replace(`/mypage#${newHashDate}`, undefined, { shallow: true })
+      .then(() => {
+        handleHashChange();
+      });
+  }
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-      const hashDate = parseDateHash(hash);
-      const today = new Date();
-      const selectedPosts = posts.filter((post) => {
-        const postDate = new Date(post.createdAt);
-        return areDatesEqual(hashDate, postDate);
-      })
-
-      if (areDatesEqual(hashDate, today)) {
-        router.replace('/mypage', undefined, { shallow: true});
-      }
-      setSelectedDate(hashDate);
-      setSelectedPosts(selectedPosts);
-    };
-
     window.addEventListener('hashchange', handleHashChange);
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
@@ -60,9 +81,15 @@ export default function MyPage({ posts }: PropsType ) {
         <Header />
         <div className="grid gap-4">
           <div className="flex items-center justify-center space-x-2 text-2xl font-bold text-[#000000]">
-            <ChevronLeftIcon className="h-4 w-4" />
-            <span>{formatDate(selectedDate)}</span>
-            <ChevronRightIcon className="h-4 w-4" />
+            <div onClick={() => handleDate(-1)}>
+              <ChevronLeftIcon className="h-4 w-4" />
+            </div>
+            <span>{formatDateForHead(selectedDate)}</span>
+            {!isToday && (
+              <div onClick={() => handleDate(1)}>
+                <ChevronRightIcon className="h-4 w-4" />
+              </div>
+            )}
           </div>
           <PostSubmitForm />
           {selectedPosts.map((post, index) => (
