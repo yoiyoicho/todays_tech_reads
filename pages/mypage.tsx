@@ -3,7 +3,7 @@
  * @see https://v0.dev/t/YPdBb8ZvvCY
  */
 
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Header from '../components/Header';
 import ChevronLeftIcon from '../components/ChevronLeftIcon';
 import ChevronRightIcon from '../components/ChevronRightIcon';
@@ -11,6 +11,7 @@ import Post from '../components/Post';
 import PostSubmitForm from '../components/PostSubmitForm';
 import prisma from '../lib/prisma';
 import { PostType } from '../types/PostType';
+import { getSession } from '@auth0/nextjs-auth0';
 
 type PropsType = {
   posts: PostType[];
@@ -37,23 +38,32 @@ export default function MyPage({ posts }: PropsType ) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = await prisma.post.findMany({
-    select: {
-      id: true,
-      comment: true,
-      article: { // TODO: N+1が起きていないかの確認
-        select: {
-          id: true,
-          url: true,
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx.req, ctx.res);
+  if (session) {
+    const posts = await prisma.post.findMany({
+      select: {
+        id: true,
+        comment: true,
+        article: { // TODO: N+1が起きていないかの確認
+          select: {
+            id: true,
+            url: true,
+          },
         },
       },
-    },
-    // TODO: where句を使ってユーザー、投稿日で絞る
-  });
-  // TODO: Articleにtitle, description, image情報を追加する
-  return {
-    props: { posts },
-    revalidate: 10,
-  };
+      // TODO: where句を使ってユーザー、投稿日で絞る
+    });
+    // TODO: Articleにtitle, description, image情報を追加する
+    return {
+      props: { posts },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }, 
+    }
+  }
 };
