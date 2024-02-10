@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-icons": "^1.3.0",
     "@vercel/postgres": "^0.7.2",
