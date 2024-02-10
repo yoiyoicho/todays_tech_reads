@@ -4,6 +4,9 @@ export type PostType = {
   article: {
     id: string;
     url: string;
+    title?: string;
+    description?: string;
+    ogImage?: any;
   };
   userId: string;
 }
