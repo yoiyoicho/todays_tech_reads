@@ -4,5 +4,6 @@ export type PostType = {
   article: {
     id: string;
     url: string;
-  }
+  };
+  userId: string;
 }

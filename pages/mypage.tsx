@@ -41,7 +41,12 @@ export default function MyPage({ posts }: PropsType ) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getSession(ctx.req, ctx.res);
   if (session) {
+    const userId = session.user.sub;
     const posts = await prisma.post.findMany({
+      where: {
+        userId: userId,
+        // TODO: 投稿日で絞る
+      },
       select: {
         id: true,
         comment: true,
@@ -52,7 +57,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           },
         },
       },
-      // TODO: where句を使ってユーザー、投稿日で絞る
     });
     // TODO: Articleにtitle, description, image情報を追加する
     return {
