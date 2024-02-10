@@ -4,8 +4,11 @@
  */
 
 import Header from '../components/Header';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
     <div key="1" className="bg-[#5590c9] min-h-screen p-4">
       <div className="max-w-2xl mx-auto">
@@ -24,7 +27,8 @@ export default function Home() {
                   Open Source.
                 </p>
               </div>
-              <div className="space-x-4">
+              {!user && (
+                <div className="space-x-4">
                 <a
                   className="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                   href="/api/auth/login?returnTo=/mypage"
@@ -32,6 +36,7 @@ export default function Home() {
                   Get Started
                 </a>
               </div>
+              )}
             </div>
           </div>
         </section>
