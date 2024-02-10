@@ -28,11 +28,11 @@ export default function MyPage({ posts }: PropsType ) {
             <span>2023/1/23 Tue.</span>
             <ChevronRightIcon className="h-4 w-4" />
           </div>
+          <PostSubmitForm />
           {posts.map((post, index) => (
             <Post key={index} post={post} />
           ))}
         </div>
-        <PostSubmitForm />
       </div>
     </div>
   )
