@@ -26,10 +26,12 @@ export default function Post({ post }: PropsType) {
           </p>
         </div>
       </div>
-      <div className="mt-4 p-2 bg-gray-100 rounded-md">
-        <h3 className="text-lg font-semibold text-[#5590c9]">Comments</h3>
-        <p className="text-gray-700">{post.comment}</p>
-      </div>
+      {post.comment && (
+        <div className="mt-4 p-2 bg-gray-100 rounded-md">
+          <h3 className="text-lg font-semibold text-[#5590c9]">Comments</h3>
+          <p className="text-gray-700">{post.comment}</p>
+        </div>
+      )}
     </div>
   )
 }
