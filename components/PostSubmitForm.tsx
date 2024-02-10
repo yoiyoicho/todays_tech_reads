@@ -1,13 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { PostFormType } from '../types/PostFormType';
 
 export default function PostSubmitForm() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<PostFormType>();
-  const router = useRouter();
 
-  // TODO: dataを型付けする
   const onSubmit = async (data: PostFormType) => {
     try {
       const response = await fetch('/api/post', {
@@ -27,7 +24,7 @@ export default function PostSubmitForm() {
       console.error('Request failed:', error);
       alert('Failed to submit the post. Redirecting to the main page...');
     } finally {
-      router.push('/mypage');
+      window.location.href = '/mypage';
     }
   };
 

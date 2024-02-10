@@ -9,4 +9,5 @@ export type PostType = {
     ogImage?: any;
   };
   userId: string;
+  createdAt: string;
 }
