@@ -12,8 +12,7 @@ import PostSubmitForm from '../components/PostSubmitForm';
 import prisma from '../lib/prisma';
 import { PostType } from '../types/PostType';
 import { getSession } from '@auth0/nextjs-auth0';
-import axios from 'axios';
-import cheerio from 'cheerio';
+import { fetchMetadata } from '@/lib/fetchMetadata';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { parseDateHash, areDatesEqual, formatDateForHead, formatDateForHash } from '../lib/utils';
@@ -144,23 +143,3 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 };
-
-async function fetchMetadata (url: string) {
-  try {
-    const response = await axios.get(url);
-    const html = response.data;
-    const $ = cheerio.load(html);
-
-    const title = $('title').text();
-    const description = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content');
-    const ogImage = $('meta[property="og:image"]').attr('content');
-
-    return {
-      ...(title && { title }),
-      ...(description && { description }),
-      ...(ogImage && { ogImage }),
-    };
-  } catch (error) {
-    return { };
-  }
-}

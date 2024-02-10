@@ -10,6 +10,16 @@ export default function Header() {
           <div className="flex gap-4 items-center">
             <p>{user.name}さん</p>
             <Link
+              href="/ranking"
+            >
+              Ranking
+            </Link>
+            <Link
+              href="/mypage"
+            >
+              マイページ
+            </Link>
+            <Link
               className="p-2 bg-white text-[#5590c9] rounded-md"
               href="/api/auth/logout"
             >
