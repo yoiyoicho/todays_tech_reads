@@ -7,7 +7,6 @@ export default function PostSubmitForm() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<PostFormType>();
   const router = useRouter();
 
-  // TODO: dataを型付けする
   const onSubmit = async (data: PostFormType) => {
     try {
       const response = await fetch('/api/post', {
