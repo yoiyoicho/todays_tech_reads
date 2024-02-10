@@ -1,40 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Today's Tech Reads - 「今日読んだ技術記事」の記録アプリ
 
-## Getting Started
+https://todays-tech-reads.vercel.app/
 
-First, run the development server:
+![スクリーンショット 2024-02-10 23 42 57](https://github.com/yoiyoicho/todays_tech_reads/assets/97581501/10a71f0d-7db4-498c-8ea3-fd9277e8f416)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## サービス概要
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+今日読んだ技術記事をコメント付きで簡単登録。あとから日別に振り返ることができるアプリです。
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## サービス開発の背景
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Zennのスクラップ機能を利用して、その日に読んだ技術記事を記録していましたが、よりシンプルに記録できるアプリが欲しいと思い開発しました。また、Next.jsの理解を深めること、v0.devやPassKeyといった新しい技術に触れることも目的でした。
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 使用技術
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 言語・フレームワーク
 
-## Learn More
+- Next.js
+- prisma
+- TypeScript
 
-To learn more about Next.js, take a look at the following resources:
+### インフラ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 認証
 
-## Deploy on Vercel
+- Auth0
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### その他
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- v0.dev（コンポーネントデザイン）
+
+## 今後の開発予定
+
+- 読んだ記録をGitHubの草のように表示する機能
+- 他のユーザーのコメントをチェックできる機能
+- ランキングページからクリップできる機能
+- Google Chrome拡張機能
