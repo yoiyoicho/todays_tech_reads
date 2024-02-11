@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import type { PrismaClient } from '@prisma/client';
 
-export async function findOrCreateArticle(url: string) {
+export async function findOrCreateArticle(url: string, prisma: PrismaClient) {
   // TODO: urlがURL形式かどうかチェックする
   // TODO: urlからパラメータを除去する
 
