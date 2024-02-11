@@ -29,7 +29,7 @@ export default async function handler(
   }
 
   try {
-    const article = await findOrCreateArticle(url);
+    const article = await findOrCreateArticle(url, prisma);
     if (!article) {
       throw new Error("Failed to find or create article.");
     }
