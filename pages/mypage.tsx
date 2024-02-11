@@ -16,6 +16,7 @@ import { fetchMetadata } from '@/lib/fetchMetadata';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { parseDateHash, areDatesEqual, formatDateForHead, formatDateForHash } from '../lib/utils';
+import Footer from '../components/Footer';
 
 type PropsType = {
   posts: PostType[];
@@ -81,12 +82,12 @@ export default function MyPage({ posts }: PropsType ) {
         <div className="grid gap-4">
           <div className="flex items-center justify-center space-x-2 text-2xl font-bold text-[#000000]">
             <div onClick={() => handleDate(-1)}>
-              <ChevronLeftIcon className="h-4 w-4" />
+              <ChevronLeftIcon className="h-4 w-4 cursor-pointer" />
             </div>
             <span>{formatDateForHead(selectedDate)}</span>
             {!isToday && (
               <div onClick={() => handleDate(1)}>
-                <ChevronRightIcon className="h-4 w-4" />
+                <ChevronRightIcon className="h-4 w-4 cursor-pointer" />
               </div>
             )}
           </div>
@@ -96,6 +97,7 @@ export default function MyPage({ posts }: PropsType ) {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
