@@ -6,7 +6,7 @@ export default function Header() {
   const { user } = useUser();
   return(
     <header className="flex justify-between items-center mb-4">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-1">
         <Image
           alt="icon"
           height="48"
