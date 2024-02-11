@@ -16,6 +16,7 @@ import { fetchMetadata } from '@/lib/fetchMetadata';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { parseDateHash, areDatesEqual, formatDateForHead, formatDateForHash } from '../lib/utils';
+import Footer from '../components/Footer';
 
 type PropsType = {
   posts: PostType[];
@@ -96,6 +97,7 @@ export default function MyPage({ posts }: PropsType ) {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

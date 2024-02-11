@@ -12,12 +12,16 @@ export default function Header() {
             <Link
               href="/ranking"
             >
-              Ranking
+              <span className="underline">
+                Ranking
+              </span>
             </Link>
             <Link
               href="/mypage"
             >
-              マイページ
+              <span className="underline">
+                マイページ
+              </span>
             </Link>
             <Link
               className="p-2 bg-white text-[#5590c9] rounded-md"

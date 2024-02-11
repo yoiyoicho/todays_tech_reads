@@ -4,6 +4,7 @@ import Article from '../components/Article';
 import prisma from '../lib/prisma';
 import { ArticleType } from '../types/ArticleType';
 import { fetchMetadata } from '@/lib/fetchMetadata';
+import Footer from '../components/Footer';
 
 type PropsType = {
   articles: ArticleType[];
@@ -26,6 +27,7 @@ export default function MyPage({ articles }: PropsType ) {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
