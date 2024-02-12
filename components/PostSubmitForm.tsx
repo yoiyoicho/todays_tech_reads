@@ -38,14 +38,14 @@ export default function PostSubmitForm() {
           Share an article you read today:
         </label>
         <input
-          className="p-2 border border-gray-200 border-gray-300 rounded-md dark:border-gray-800"
+          className="p-2 border border-gray-200 border-gray-300 rounded-md focus:border-gray-400 focus:outline-none"
           placeholder="Enter article URL"
           id="url"
           type="url"
           {...register('url', { required: true })}
         />
         <textarea
-          className="p-2 border border-gray-200 border-gray-300 rounded-md mt-2 dark:border-gray-800 dark:text-black"
+          className="p-2 border border-gray-200 border-gray-300 rounded-md mt-2 dark:text-black focus:border-gray-400 focus:outline-none"
           id="comment"
           placeholder="Enter your comment"
           {...register('comment')}
