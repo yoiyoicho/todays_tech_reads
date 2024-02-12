@@ -49,8 +49,8 @@ export default function MyPage({ posts }: PropsType ) {
     const selectedPosts = filterdPosts(hashDate);
 
     if (areDatesEqual(hashDate, today)) {
-      router.replace('/mypage', undefined, { shallow: true });
       setIsToday(true);
+      router.push('/mypage', undefined, { shallow: true });
     } else {
       setIsToday(false);
     }
@@ -62,7 +62,7 @@ export default function MyPage({ posts }: PropsType ) {
     const newDate = new Date();
     newDate.setDate(selectedDate.getDate() + day);
     const newHashDate = formatDateForHash(newDate);
-    router.replace(`/mypage#${newHashDate}`, undefined, { shallow: true })
+    router.push(`/mypage#${newHashDate}`, undefined, { shallow: true })
       .then(() => {
         handleHashChange();
       });
