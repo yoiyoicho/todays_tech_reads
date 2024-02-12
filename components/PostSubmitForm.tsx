@@ -45,7 +45,7 @@ export default function PostSubmitForm() {
           {...register('url', { required: true })}
         />
         <textarea
-          className="p-2 border border-gray-200 border-gray-300 rounded-md mt-2 dark:border-gray-800"
+          className="p-2 border border-gray-200 border-gray-300 rounded-md mt-2 dark:border-gray-800 dark:text-black"
           id="comment"
           placeholder="Enter your comment"
           {...register('comment')}
