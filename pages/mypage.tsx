@@ -41,11 +41,13 @@ export default function MyPage({ posts }: PropsType ) {
     filterdPosts(selectedDate)
   );
   const [isToday, setIsToday] = useState<boolean>(true);
-  const postCountByDate = useMemo(() => {
+  const postCountByDate: Map<string, number> = useMemo(() => {
     const map = new Map<string, number>();
     posts.forEach((post) => {
-      const count = map.get(post.createdAt) || 0;
-      map.set(post.createdAt, count + 1);
+      const date = new Date(post.createdAt);
+      const formattedDate = date.toISOString().split('T')[0];
+      const count = map.get(formattedDate) || 0;
+      map.set(formattedDate, count + 1);
     })
     return map;
   },[posts]);
