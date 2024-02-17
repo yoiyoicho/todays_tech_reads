@@ -6,8 +6,6 @@
 import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import Header from '../components/Header';
-import ChevronLeftIcon from '../components/ChevronLeftIcon';
-import ChevronRightIcon from '../components/ChevronRightIcon';
 import Post from '../components/Post';
 import PostSubmitForm from '../components/PostSubmitForm';
 import prisma from '../lib/prisma';
@@ -40,7 +38,6 @@ export default function MyPage({ posts }: PropsType ) {
   const [selectedPosts, setSelectedPosts] = useState<PostType[]>(
     filterdPosts(selectedDate)
   );
-  const [isToday, setIsToday] = useState<boolean>(true);
   const postCountByDate: Map<string, number> = useMemo(() => {
     const map = new Map<string, number>();
     posts.forEach((post) => {
@@ -51,12 +48,6 @@ export default function MyPage({ posts }: PropsType ) {
     })
     return map;
   },[posts]);
-
-  const handleSelectedDate = (day: number) => {
-    const newDate = new Date();
-    newDate.setDate(selectedDate.getDate() + day);
-    setSelectedDate(newDate);
-  }
 
   // URLハッシュからselectedDateを更新
   useEffect(() => {
@@ -77,7 +68,6 @@ export default function MyPage({ posts }: PropsType ) {
     const selectedPosts = filterdPosts(selectedDate);
     const today = new Date();
     setSelectedPosts(selectedPosts);
-    setIsToday(areDatesEqual(selectedDate, today));
 
     const hash = formatDateForHash(selectedDate);
     window.location.hash = hash;
@@ -89,15 +79,7 @@ export default function MyPage({ posts }: PropsType ) {
         <Header />
         <div className="grid gap-4">
           <div className="flex items-center justify-center space-x-2 text-2xl font-bold text-[#000000]">
-            <div onClick={() => handleSelectedDate(-1)}>
-              <ChevronLeftIcon className="h-4 w-4 cursor-pointer" />
-            </div>
-            <span>{formatDateForHead(selectedDate)}</span>
-            {!isToday && (
-              <div onClick={() => handleSelectedDate(1)}>
-                <ChevronRightIcon className="h-4 w-4 cursor-pointer" />
-              </div>
-            )}
+            {formatDateForHead(selectedDate)}
           </div>
           <Ice selectedDate={selectedDate} setSelectedDate={setSelectedDate} postCountByDate={postCountByDate} />
           <PostSubmitForm />
