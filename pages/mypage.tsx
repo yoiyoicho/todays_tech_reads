@@ -3,27 +3,25 @@
  * @see https://v0.dev/t/YPdBb8ZvvCY
  */
 
+import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import Header from '../components/Header';
-import ChevronLeftIcon from '../components/ChevronLeftIcon';
-import ChevronRightIcon from '../components/ChevronRightIcon';
 import Post from '../components/Post';
 import PostSubmitForm from '../components/PostSubmitForm';
 import prisma from '../lib/prisma';
 import { PostType } from '../types/PostType';
 import { getSession } from '@auth0/nextjs-auth0';
 import { fetchMetadata } from '@/lib/fetchMetadata';
-import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { parseDateHash, areDatesEqual, formatDateForHead, formatDateForHash } from '../lib/utils';
 import Footer from '../components/Footer';
+import Ice from '../components/Ice';
 
 type PropsType = {
   posts: PostType[];
 }
 
 export default function MyPage({ posts }: PropsType ) {
-  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState<Date>(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -40,40 +38,40 @@ export default function MyPage({ posts }: PropsType ) {
   const [selectedPosts, setSelectedPosts] = useState<PostType[]>(
     filterdPosts(selectedDate)
   );
-  const [isToday, setIsToday] = useState<boolean>(true);
+  const postCountByDate: Map<string, number> = useMemo(() => {
+    const map = new Map<string, number>();
+    posts.forEach((post) => {
+      const date = new Date(post.createdAt);
+      const formattedDate = date.toISOString().split('T')[0];
+      const count = map.get(formattedDate) || 0;
+      map.set(formattedDate, count + 1);
+    })
+    return map;
+  },[posts]);
 
-  const handleHashChange = () => {
-    const hash = window.location.hash.slice(1);
-    const hashDate = parseDateHash(hash);
-    const today = new Date();
-    const selectedPosts = filterdPosts(hashDate);
-
-    if (areDatesEqual(hashDate, today)) {
-      setIsToday(true);
-      router.push('/mypage', undefined, { shallow: true });
-    } else {
-      setIsToday(false);
-    }
-    setSelectedDate(hashDate);
-    setSelectedPosts(selectedPosts);
-  };
-
-  const handleDate = (day: number) => {
-    const newDate = new Date();
-    newDate.setDate(selectedDate.getDate() + day);
-    const newHashDate = formatDateForHash(newDate);
-    router.push(`/mypage#${newHashDate}`, undefined, { shallow: true })
-      .then(() => {
-        handleHashChange();
-      });
-  }
-
+  // URLハッシュからselectedDateを更新
   useEffect(() => {
-    window.addEventListener('hashchange', handleHashChange);
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+    const hashChanged = () => {
+      const hash = window.location.hash.slice(1);
+      const hashDate = parseDateHash(hash);
+      setSelectedDate(hashDate);
     };
+
+    window.addEventListener('hashchange', hashChanged);
+    hashChanged();
+
+    return () => window.removeEventListener('hashchange', hashChanged);
   }, []);
+
+  // selectedDateの変更をURLハッシュに反映
+  useEffect(() => {
+    const selectedPosts = filterdPosts(selectedDate);
+    const today = new Date();
+    setSelectedPosts(selectedPosts);
+
+    const hash = formatDateForHash(selectedDate);
+    window.location.hash = hash;
+  }, [selectedDate])
 
   return (
     <div key="1" className="bg-[#5590c9] min-h-screen p-4">
@@ -81,16 +79,9 @@ export default function MyPage({ posts }: PropsType ) {
         <Header />
         <div className="grid gap-4">
           <div className="flex items-center justify-center space-x-2 text-2xl font-bold text-[#000000]">
-            <div onClick={() => handleDate(-1)}>
-              <ChevronLeftIcon className="h-4 w-4 cursor-pointer" />
-            </div>
-            <span>{formatDateForHead(selectedDate)}</span>
-            {!isToday && (
-              <div onClick={() => handleDate(1)}>
-                <ChevronRightIcon className="h-4 w-4 cursor-pointer" />
-              </div>
-            )}
+            {formatDateForHead(selectedDate)}
           </div>
+          <Ice selectedDate={selectedDate} setSelectedDate={setSelectedDate} postCountByDate={postCountByDate} />
           <PostSubmitForm />
           {selectedPosts.map((post, index) => (
             <Post key={index} post={post} />
