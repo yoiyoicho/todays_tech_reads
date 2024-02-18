@@ -6,15 +6,17 @@ export default function Header() {
   const { user } = useUser();
   return(
     <header className="flex justify-between items-center mb-4">
-      <div className="flex items-center gap-1">
-        <Image
-          alt="icon"
-          height="48"
-          src="/penguin.png"
-          width="48"
-        />
-        <h1 className="text-3xl font-bold text-white">{"Today's Tech Reads"}</h1>
-      </div>
+        <Link href="/">
+          <div className="flex items-center gap-1">
+            <Image
+              alt="icon"
+              height="48"
+              src="/penguin.png"
+              width="48"
+            />
+            <h1 className="text-3xl font-bold text-white">{"Today's Tech Reads"}</h1>
+          </div>
+        </Link>
         {user ? (
           <div className="flex gap-4 items-center">
             <Link
