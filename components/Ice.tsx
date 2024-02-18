@@ -16,8 +16,8 @@ export default function Ice({ selectedDate, setSelectedDate, postCountByDate }: 
     const lastDay = new Date(year, month + 1, 0);
     const map = new Map<string, number>();
 
-    for(let day = firstDay; day <= lastDay; day.setDate(day.getDate() + 1)){
-      const formattedDate = day.toISOString().split('T')[0];
+    for(let date = firstDay; date <= lastDay; date.setDate(date.getDate() + 1)){
+      const formattedDate = date.toLocaleString('ja-JP', { year: "numeric", month: '2-digit', day: '2-digit' });
       const count = postCountByDate.get(formattedDate) || 0;
       map.set(formattedDate, count);
     }
