@@ -42,7 +42,8 @@ export default function MyPage({ posts }: PropsType ) {
     const map = new Map<string, number>();
     posts.forEach((post) => {
       const date = new Date(post.createdAt);
-      const formattedDate = date.toISOString().split('T')[0];
+      // 日本時間でYYYY/MM/DDの形式
+      const formattedDate = date.toLocaleString('ja-JP', { year: "numeric", month: '2-digit', day: '2-digit' });
       const count = map.get(formattedDate) || 0;
       map.set(formattedDate, count + 1);
     })
