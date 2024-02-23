@@ -61,3 +61,17 @@ export function formatDateForHash(date: Date) {
 
   return `${year}${monthStr}${dayStr}`;
 }
+
+export function formatDateForWeeklyRanking(endDate: Date) {
+  const startDate = new Date();
+  startDate.setDate(endDate.getDate() - 7);
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth() + 1;
+  const startDay = startDate.getDate();
+
+  const endYear = endDate.getFullYear();
+  const endMonth = endDate.getMonth() + 1; // monthは0から始まるため+1する
+  const endDay = endDate.getDate();
+
+  return `${startYear}/${startMonth}/${startDay} - ${endYear}/${endMonth}/${endDay}`;
+}
