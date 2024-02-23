@@ -67,7 +67,6 @@ export default function MyPage({ posts }: PropsType ) {
   // selectedDateの変更をURLハッシュに反映
   useEffect(() => {
     const selectedPosts = filterdPosts(selectedDate);
-    const today = new Date();
     setSelectedPosts(selectedPosts);
 
     const hash = formatDateForHash(selectedDate);
