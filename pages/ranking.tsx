@@ -33,17 +33,28 @@ export default function MyPage({ articles }: PropsType ) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const articles = await prisma.article.findMany({
-      select: {
-        id: true,
-        url: true,
-        posts: {
-          select: {
-            id: true,
-          }
-        }
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  const articles = await prisma.article.findMany({
+    where: {
+      posts: {
+        some: {
+          createdAt: {
+            gte: oneWeekAgo,
+          },
+        },
       },
-    });
+    },
+    select: {
+      id: true,
+      url: true,
+      posts: {
+        select: {
+          id: true,
+        }
+      }
+    }});
     const articlesWithMetadata = await Promise.all(articles.map(async article => {
       const metadata = await fetchMetadata(article.url);
       return {
